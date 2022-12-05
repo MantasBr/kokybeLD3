@@ -2,56 +2,48 @@ import { get } from "request";
 import { writeFile } from "fs";
 
 const DAYS_IN_WEEK = 7;
-const daysInMonth = 30;
+const DAYS_IN_MONTH = 30;
 
-const songs = ["Back In Black", "Stairway to Heaven", "Hey Jude"];
-const Artists = ["ACDC", "Led Zeppelin", "The Beatles"];
+const SONGS = ["Back In Black", "Stairway to Heaven", "Hey Jude"];
+const ARTISTS = ["ACDC", "Led Zeppelin", "The Beatles"];
 
 function eraseDatabase() {}
-function restore_database() {}
+function restoreDatabase() {}
 
-class animal {}
+class Animal {}
 class Alpaca {}
 
 const Car = {
-  carMake: "Honda",
-  carModel: "Accord",
-  carColor: "Blue"
+    make: "Honda",
+    model: "Accord",
+    color: "Blue"
 };
 
 function hashIt(data) {
-    // The hash
     let hash = 0;
-
-    // Length of string
     const length = data.length;
 
-    // Loop through every character in data
     for (let i = 0; i < length; i++) {
-        // Get character code.
         const char = data.charCodeAt(i);
-        // Make the hash
         hash = (hash << 5) - hash + char;
+
         // Convert to 32-bit integer
         hash &= hash;
     }
 }
 
-get(
-    "https://en.wikipedia.org/wiki/Robert_Cecil_Martin",
-    (requestErr, response, body) => {
-        if (requestErr) {
-            console.error(requestErr);
-        } else {
-            writeFile("article.html", body, writeErr => {
-                if (writeErr) {
-                    console.error(writeErr);
-                } else {
-                    console.log("File written");
-                }
-            });
-        }
+async function getCleanCodeArticle() {
+    try {
+        const body = await get("https://en.wikipedia.org/wiki/Robert_Cecil_Martin");
+        await writeFile("article.html", body);
+        console.log("File written");
+    } catch (err) {
+        console.error(err);
     }
-);
+}
 
-setTimeout(blastOff, 86400000);
+getCleanCodeArticle();
+
+const MILLISECONDS_PER_DAY = 60 * 60 * 24 * 1000; //86400000;
+
+setTimeout(blastOff, MILLISECONDS_PER_DAY);
